@@ -27,17 +27,17 @@ function initializeGoogleMap(x,y) {
     var useragent = navigator.userAgent;
     document.getElementById("area_name").innnerHTML = 'fetch google map';
 
-    var myLatLng = new google.maps.LatLng(x,y);
+    var myLatlng = new google.maps.LatLng(x,y);
     var mapOptions = {
         zoom: 17,
-        center: myLatLng,
+        center: myLatlng,
         mapTypeId: google.maps.MapTypeId.ROADMAP
     }
 
     var map = new google.maps.Map(document.getElementById("map_canvas"), mapOptions);
 
-    var marker = new google.maps.maps.Marker({
-        position: myLatLng,
+    var marker = new google.maps.Marker({
+        position: myLatlng,
         map: map,
         title:"your position"
     });
@@ -46,9 +46,9 @@ function initializeGoogleMap(x,y) {
 
 function getAreaName(latLngNow){
     var geocoder = new google.maps.Geocoder();
-    geocorder.geocode({latLng: latLngNow},function(results,status){
+    geocoder.geocode({latLng: latLngNow},function(results,status){
         if(status == google.maps.GeocoderStatus.OK){
-            document.getElementById("area_name").innnerHTML = resulets[0].formatted_address+'near';
+            document.getElementById("area_name").innnerHTML = results[0].formatted_address+'near';
         } else {
             document.getElementById("area_name").innnerHTML = 'error';
         }
