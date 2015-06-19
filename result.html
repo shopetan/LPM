@@ -9,8 +9,9 @@
 
     <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
     <script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+    <script src='https://cdn.mlkcca.com/v2.0.0/milkcocoa.js'></script>
     <script type="text/javascript" src="js/common.js"></script>
-
+    <script type="text/javascript" src="js/search.js"></script>
   </head>
   <body>
     <div class="container">
@@ -19,7 +20,12 @@
       writeNavbar();
     </script>
     <!-- search -->
-
+    <p>名前<textarea name="" id="name" cols="30" rows="1">猫</textarea></p>
+    <p>カテゴリ<textarea name="" id="category" cols="30" rows="1">猫</textarea></p>
+    <p>住所<textarea name="" id="address" cols="30" rows="1">つくば市</textarea></p>
+    <button name="button" onClick="clickEvent()">search</button>
+    <p id="result_p"><p>
+    <div class="bs-component"><table class="table table-striped table-hover " id="search_result"></table></div>
 
     <!-- result -->
 
