@@ -53,15 +53,16 @@ function initializeGoogleMap(x,y) {
         });
         infotable(marker.getPosition().lat(),
                   marker.getPosition().lng());
-                  getAreaName(myLatlng);
+                  getAreaName(event.latLng);
     })
     //マーカー移動後に座標を取得するイベントの登録
 
+/*TODO: ここでおそらく正しく取得ができていない*/
     google.maps.event.addListener(marker,'dragend',
     function(event){
         infotable(marker.getPosition().lat(),
                   marker.getPosition().lng());
-                  getAreaName(myLatlng);
+                  getAreaName(event.latLng);
     })
     getAreaName(myLatlng);
 
