@@ -42,7 +42,7 @@ function initializeGoogleMap(x,y) {
         draggable:true,
         map: map
     });
-    
+
     google.maps.event.addListener(map,'click',
     function(event){
         if(marker){marker.setMap(null)};
@@ -53,6 +53,7 @@ function initializeGoogleMap(x,y) {
         });
         infotable(marker.getPosition().lat(),
                   marker.getPosition().lng());
+                  getAreaName(myLatlng);
     })
     //マーカー移動後に座標を取得するイベントの登録
 
@@ -60,9 +61,10 @@ function initializeGoogleMap(x,y) {
     function(event){
         infotable(marker.getPosition().lat(),
                   marker.getPosition().lng());
-        geocode();
+                  getAreaName(myLatlng);
     })
     getAreaName(myLatlng);
+
 }
 function infotable(lat,lng,level){
     document.getElementById('id_lat').innerHTML = lat;
@@ -71,7 +73,8 @@ function infotable(lat,lng,level){
 
 function getAreaName(latLngNow){
     var geocoder = new google.maps.Geocoder();
-    geocoder.geocode({'location': Marker.getPosition()},function(results,status){
+    geocoder.geocode({ 'location': latLngNow},
+    function(results,status){
         if(status == google.maps.GeocoderStatus.OK){
             document.getElementById("area_name").innnerHTML = results[0].formatted_address+'near';
             document.getElementById('id_address').innerHTML = results[0].formatted_address.replace(/^日本, /, '');
