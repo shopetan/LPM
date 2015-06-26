@@ -34,21 +34,47 @@ function initializeGoogleMap(x,y) {
         mapTypeId: google.maps.MapTypeId.ROADMAP
     }
 
-    var map = new google.maps.Map(document.getElementById("map_canvas"), mapOptions);
 
+
+    var map = new google.maps.Map(document.getElementById("map_canvas"), mapOptions);
     var marker = new google.maps.Marker({
         position: myLatlng,
-        map: map,
-        title:"your position"
+        draggable:true,
+        map: map
     });
+    
+    google.maps.event.addListener(map,'click',
+    function(event){
+        if(marker){marker.setMap(null)};
+        marker = new google.maps.Marker({
+            position:event.latLng,
+            draggable:true,
+            map: map
+        });
+        infotable(marker.getPosition().lat(),
+                  marker.getPosition().lng());
+    })
+    //マーカー移動後に座標を取得するイベントの登録
+
+    google.maps.event.addListener(marker,'dragend',
+    function(event){
+        infotable(marker.getPosition().lat(),
+                  marker.getPosition().lng());
+        geocode();
+    })
     getAreaName(myLatlng);
+}
+function infotable(lat,lng,level){
+    document.getElementById('id_lat').innerHTML = lat;
+    document.getElementById('id_lng').innerHTML = lng;
 }
 
 function getAreaName(latLngNow){
     var geocoder = new google.maps.Geocoder();
-    geocoder.geocode({latLng: latLngNow},function(results,status){
+    geocoder.geocode({'location': Marker.getPosition()},function(results,status){
         if(status == google.maps.GeocoderStatus.OK){
             document.getElementById("area_name").innnerHTML = results[0].formatted_address+'near';
+            document.getElementById('id_address').innerHTML = results[0].formatted_address.replace(/^日本, /, '');
         } else {
             document.getElementById("area_name").innnerHTML = 'error';
         }
