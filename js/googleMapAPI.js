@@ -2,7 +2,8 @@ function startFunc(){
     getLocation();
 }
 function getLocation(){
-    document.getElementById("area_name").innnerHTML = 'get your potition';
+    var message = "get your potition";
+    document.getElementById("area_name").innnerHTML = message;
 
     if(navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(successCallback,errorCallback);
@@ -19,7 +20,7 @@ function successCallback(pos) {
 }
 
 function errorCallback(srror) {
-    message = "not available potition";
+    var message = "not available potition";
     document.getElementById("area_name").iinerHTML = massage;
 }
 
@@ -34,30 +35,31 @@ function initializeGoogleMap(x,y) {
         mapTypeId: google.maps.MapTypeId.ROADMAP
     }
 
-
-
     var map = new google.maps.Map(document.getElementById("map_canvas"), mapOptions);
     var marker = new google.maps.Marker({
         position: myLatlng,
         draggable:true,
         map: map
     });
+    infotable(marker.getPosition().lat(),
+              marker.getPosition().lng());
+              getAreaName(myLatlng);              
 
     google.maps.event.addListener(map,'click',
     function(event){
         if(marker){marker.setMap(null)};
+        myLatlng = event.latLng;
         marker = new google.maps.Marker({
             position:event.latLng,
             draggable:true,
             map: map
         });
-        infotable(marker.getPosition().lat(),
-                  marker.getPosition().lng());
-                  getAreaName(event.latLng);
-    })
-    //マーカー移動後に座標を取得するイベントの登録
+    infotable(marker.getPosition().lat(),
+              marker.getPosition().lng());
+              getAreaName(myLatlng);
 
-/*TODO: ここでおそらく正しく取得ができていない*/
+    //マーカー移動後に座標を取得するイベントの登録
+    /*TODO: ここでおそらく正しく取得ができていない*/
     google.maps.event.addListener(marker,'dragend',
     function(event){
         infotable(marker.getPosition().lat(),
@@ -65,6 +67,7 @@ function initializeGoogleMap(x,y) {
                   getAreaName(event.latLng);
     })
     getAreaName(myLatlng);
+})
 
 }
 function infotable(lat,lng,level){
