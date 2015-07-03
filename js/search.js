@@ -40,22 +40,24 @@ function clickEvent(){
     searchError();
   } else {
     addTextResult(name, cateName, addr);
-    search(cateNo, addr, name);
+    search(cateNo, cateName, addr, name);
     //console.log("条件" + cateNo + addr + name);
   }
 }
 
-function search(cat, addr, namae){
+function search(cat, cateName, addr, namae){
+  console.log(cat + cateName, addr, namae)
 	// Table をクリアにする
 	resultBoardInit();
+
 	// 検索して結果を表示する
   lpmDataStore.stream().size(20).next(function(err, lpm) {
   	//console.log(lpm);
   	lpm.forEach(function(lp) {
   		//console.log("全部-----" + lp.value.category + " " + lp.value.address);
   		//console.log(cat + addr)
-  		// 名前の検索
-  		if((lp.value.name).indexOf(namae) != -1) {
+  		
+  		if(((lp.value.name).indexOf(namae) != -1 || namae === "") && (addr === lp.value.address || addr === "") && (cateName === lp.value.category || cat === 0)){
         if(lpcount === 0) {
           console.log("aaaa");
           addTableHead();
@@ -66,7 +68,7 @@ function search(cat, addr, namae){
   			lpcount++;  			
   		}
   		// 住所の検索
-  		/*
+      /*
   		if(addr === lp.value.address) {
   			console.log("address match" + lp.value.address);
   			lpcount++;
@@ -75,11 +77,11 @@ function search(cat, addr, namae){
   			addText("名前: " + lp.value.name + " カテゴリ: " + lp.value.category + " 住所: " + lp.value.address);
   			lpcount++;
   		}
-  		*/
+      */
   	});
   	//検索結果が1件も見つからなかったとき
   	if(lpcount === 0) {
-  		addText("Not Found");
+  		resultHeader.innerHTML = "検索条件に合致する落し物が見つかりませんでした。";
   	}
   })
   console.log("送信完了!");
