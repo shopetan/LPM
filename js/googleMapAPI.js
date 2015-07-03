@@ -1,15 +1,15 @@
-function startFunc(){
+$(document).ready(function startFunc(){
     getLocation();
-}
+})
 function getLocation(){
     var message = "get your potition";
-    document.getElementById("area_name").innnerHTML = message;
+    document.getElementById("area_name").innerHTML = message;
 
     if(navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(successCallback,errorCallback);
     } else {
         message = "this Browser do not use GeolocationAPI";
-        document.getElementById("area_name").innnerHTML = massage;
+        document.getElementById("area_name").innerHTML = message;
     }
 }
 function successCallback(pos) {
@@ -21,12 +21,12 @@ function successCallback(pos) {
 
 function errorCallback(srror) {
     var message = "not available potition";
-    document.getElementById("area_name").iinerHTML = massage;
+    document.getElementById("area_name").iinerHTML = message;
 }
 
 function initializeGoogleMap(x,y) {
     var useragent = navigator.userAgent;
-    document.getElementById("area_name").innnerHTML = 'fetch google map';
+    document.getElementById("area_name").innerHTML = 'fetch google map';
 
     var myLatlng = new google.maps.LatLng(x,y);
     var mapOptions = {
@@ -43,7 +43,7 @@ function initializeGoogleMap(x,y) {
     });
     infotable(marker.getPosition().lat(),
               marker.getPosition().lng());
-              getAreaName(myLatlng);              
+              getAreaName(myLatlng);
 
     google.maps.event.addListener(map,'click',
     function(event){
@@ -80,10 +80,11 @@ function getAreaName(latLngNow){
     geocoder.geocode({ 'location': latLngNow},
     function(results,status){
         if(status == google.maps.GeocoderStatus.OK){
-            document.getElementById("area_name").innnerHTML = results[0].formatted_address+'near';
+            document.getElementById("area_name").innerHTML = results[0].formatted_address+'near';
             document.getElementById('id_address').innerHTML = results[0].formatted_address.replace(/^日本, /, '');
+
         } else {
-            document.getElementById("area_name").innnerHTML = 'error';
+            document.getElementById("area_name").innerHTML = 'error';
         }
     });
 }
