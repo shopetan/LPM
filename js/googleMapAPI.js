@@ -59,7 +59,6 @@ function initializeGoogleMap(x,y) {
               getAreaName(myLatlng);
 
     //マーカー移動後に座標を取得するイベントの登録
-    /*TODO: ここでおそらく正しく取得ができていない*/
     google.maps.event.addListener(marker,'dragend',
     function(event){
         infotable(marker.getPosition().lat(),
