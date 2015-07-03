@@ -44,7 +44,15 @@
           <div class="form-group">
             <label for="inputPassword" class="col-lg-2 control-label">画像アップロード</label>
             <div class="col-lg-10">
-              <input type="file" name="form-control" size="30">
+              <input type="file" id="file_input" name="file_input" style="display: none;">
+              <div style="float:left;margin-right:10px;" class="input-group">
+                  <span class="input-group-btn">
+                      <button class="btn btn-default" type="button" onclick="$('#file_input').click();">
+                          <i class="glyphicon glyphicon-folder-open"></i>
+                      </button>
+                  </span>
+                  <input id="dummy_file" type="text" class="form-control" placeholder="select file..." disabled>
+              </div>
             </div>
           </div>
           <div class="form-group">
@@ -62,5 +70,13 @@
       writeFooter();
     </script>
     </div>
+    <script type="text/javascript">
+    $(function(){
+        $('#file_input').change(function() {
+            $('#dummy_file').val($(this).val());
+        });
+    });
+    </script>
+
   </body>
 </html>
