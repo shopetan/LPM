@@ -22,8 +22,20 @@
     <!-- search -->
     <h1>落し物を検索する</h1>
     <div class="well">
-      <p class="text-info">名前<textarea  class="form-control" name="" id="name" cols="30" rows="1">猫</textarea></p>
-      <p class="text-info">カテゴリ<textarea class="form-control" name="" id="category" cols="30" rows="1">猫</textarea></p>
+      <p class="text-info">名前<textarea class="form-control" name="" id="name" cols="30" rows="1">猫</textarea></p>
+      <p class="text-info">
+        カテゴリ
+        <form id="form">
+        <select class="form-control" id="select">
+          <option>なし</option>
+          <option>小物</option>
+          <option>猫</option>
+          <option>学用品</option>
+          <option>4</option>
+          <option>5</option>
+        </select>
+        </form>
+      </p>
       <p class="text-info">住所<textarea class="form-control" name="" id="address" cols="30" rows="1">つくば市</textarea></p>
       <button type="submit"  class="btn btn-primary" name="button" onClick="clickEvent()">search</button>
     </div>

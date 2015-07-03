@@ -3,7 +3,7 @@ var milkcocoa = new MilkCocoa("teaib383pmz.mlkcca.com");
 var lpmDataStore = milkcocoa.dataStore('lpm');
 var catDataStore = milkcocoa.dataStore('lpm/category');
 var addDataStore = milkcocoa.dataStore('lpm/address');
-var nameTextArea, catTextArea, addTextArea, board, resultTable;
+var nameTextArea, categoryArea, addTextArea, board, resultTable;
 var lpcount;
 
 //catDataStore.push({id:"4", name:"黄色い猫", category:"猫", address:"つくば市"})
@@ -14,11 +14,11 @@ lpmDataStore.push({id:"6", name:"青い傘", category:"小物", address:"つく�
 
 window.onload = function(){
 	nameTextArea = document.getElementById("name");
-  catTextArea = document.getElementById("category");
+  categoryArea = document.forms.form.select;
   addrTextArea = document.getElementById("address");
   resultHeader = document.getElementById("result_p");
   resultTable = document.getElementById('search_result');
-
+  resultHeader.innerHTML = "落し物一覧";
   // 落し物一覧を表示する
   lpmDataStore.stream().size(20).next(function(err, lpm) {
     var count = 1;
@@ -32,11 +32,17 @@ window.onload = function(){
 // search ボタンをクリックしたとき
 function clickEvent(){
 	var name = nameTextArea.value;
-  var cat = catTextArea.value;
+  var cateNo = categoryArea.selectedIndex;
+  var cateName = categoryArea.options[cateNo].value;
   var addr = addrTextArea.value;
   lpcount = 0;
-  addTextResult(name, cat, addr);
-  search(cat, addr, name);
+  if(name === "" && cateNo === 0 && addr === "") {
+    searchError();
+  } else {
+    addTextResult(name, cateName, addr);
+    search(cateNo, addr, name);
+    //console.log("条件" + cateNo + addr + name);
+  }
 }
 
 function search(cat, addr, namae){
@@ -79,13 +85,10 @@ function search(cat, addr, namae){
   console.log("送信完了!");
 }
 
-/*
-function addText(text){
-  var msgDom = document.createElement("li");
-  msgDom.innerHTML = text;
-  board.insertBefore(msgDom, board.firstChild);
+// どの項目も入力されていないとき
+function searchError() {
+  resultHeader.innerHTML = "少なくとも1つ以上条件を追加してください。";
 }
-*/
 
 // header を表示
 function addTextResult(name, cate, addr) {
