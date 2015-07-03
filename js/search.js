@@ -3,7 +3,7 @@ var milkcocoa = new MilkCocoa("teaib383pmz.mlkcca.com");
 var lpmDataStore = milkcocoa.dataStore('lpm');
 var catDataStore = milkcocoa.dataStore('lpm/category');
 var addDataStore = milkcocoa.dataStore('lpm/address');
-var nameTextArea, catTextArea, addTextArea, board, lpBoard;
+var nameTextArea, catTextArea, addTextArea, board, resultTable;
 var lpcount;
 
 //catDataStore.push({id:"4", name:"黄色い猫", category:"猫", address:"つくば市"})
@@ -17,12 +17,14 @@ window.onload = function(){
   catTextArea = document.getElementById("category");
   addrTextArea = document.getElementById("address");
   resultHeader = document.getElementById("result_p");
-  lpBoard = document.getElementById("search_result");
+  resultTable = document.getElementById('search_result');
 
   // 落し物一覧を表示する
   lpmDataStore.stream().size(20).next(function(err, lpm) {
+    var count = 1;
+    addTableHead();
   	lpm.forEach(function(lp) {
-  		addText("名前: " + lp.value.name + " カテゴリ: " + lp.value.category + " 住所: " + lp.value.address);
+  		addText(count, lp.value.name, lp.value.category, lp.value.address);
   	})
   })
 }
@@ -38,7 +40,7 @@ function clickEvent(){
 }
 
 function search(cat, addr, namae){
-	// Board をクリアにする
+	// Table をクリアにする
 	resultBoardInit();
 	// 検索して結果を表示する
   lpmDataStore.stream().size(20).next(function(err, lpm) {
@@ -48,15 +50,19 @@ function search(cat, addr, namae){
   		//console.log(cat + addr)
   		// 名前の検索
   		if((lp.value.name).indexOf(namae) != -1) {
-  			console.log("name match" + lp.value.name + namae);
-  			addText("名前: " + lp.value.name + " カテゴリ: " + lp.value.category + " 住所: " + lp.value.address);
+        if(lpcount === 0) {
+          console.log("aaaa");
+          addTableHead();
+          lpcount++;
+  			}
+        console.log("name match" + lp.value.name + namae);
+  			addText(lpcount, lp.value.name, lp.value.category, lp.value.address);
   			lpcount++;  			
   		}
   		// 住所の検索
   		/*
   		if(addr === lp.value.address) {
   			console.log("address match" + lp.value.address);
-  			addText("名前: " + lp.value.name + " カテゴリ: " + lp.value.category + " 住所: " + lp.value.address);
   			lpcount++;
   		} else if(cat === lp.value.category) {
   			console.log("ooooo");
@@ -66,7 +72,7 @@ function search(cat, addr, namae){
   		*/
   	});
   	//検索結果が1件も見つからなかったとき
-  	if(lpcount == 0) {
+  	if(lpcount === 0) {
   		addText("Not Found");
   	}
   })
@@ -83,74 +89,31 @@ function addText(text){
 
 // header を表示
 function addTextResult(name, cate, addr) {
-	resultHeader.innerHTML = name + "名前: " + name + " カテゴリー: "+ cate + " 住所: " + addr + "の検索結果";
+	resultHeader.innerHTML = "名前[" + name + "] カテゴリー["+ cate + "] 住所[" + addr + "]の検索結果";
 }
 
 // 検索結果の落し物の
-function addText(text){
-  var lpDom = document.createElement("li");
-  lpDom.innerHTML = text;
- 	lpBoard.insertBefore(lpDom, lpBoard.firstChild);
+function addText(i, name, category, address){
+  var row = resultTable.insertRow(i);
+  var cell1 = row.insertCell(0);
+  var cell2 = row.insertCell(1);
+  var cell3 = row.insertCell(2);
+  cell1.innerHTML = name;
+  cell2.innerHTML = category;
+  cell3.innerHTML = address;
 }
 function resultBoardInit() {
-	lpBoard.innerHTML = "";
+	resultTable.innerHTML = "";
 }
-/*
-function res
-<div class="bs-component">
-          <table class="table table-striped table-hover ">
-            <thead>
-              <tr>
-                <th>#</th>
-                <th>カラムのタイトル</th>
-                <th>カラムのタイトル</th>
-                <th>カラムのタイトル</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>1</td>
-                <td>カラムの内容</td>
-                <td>カラムの内容</td>
-                <td>カラムの内容</td>
-              </tr>
-              <tr>
-                <td>2</td>
-                <td>カラムの内容</td>
-                <td>カラムの内容</td>
-                <td>カラムの内容</td>
-              </tr>
-              <tr class="info">
-                <td>3</td>
-                <td>カラムの内容</td>
-                <td>カラムの内容</td>
-                <td>カラムの内容</td>
-              </tr>
-              <tr class="success">
-                <td>4</td>
-                <td>カラムの内容</td>
-                <td>カラムの内容</td>
-                <td>カラムの内容</td>
-              </tr>
-              <tr class="danger">
-                <td>5</td>
-                <td>カラムの内容</td>
-                <td>カラムの内容</td>
-                <td>カラムの内容</td>
-              </tr>
-              <tr class="warning">
-                <td>6</td>
-                <td>カラムの内容</td>
-                <td>カラムの内容</td>
-                <td>カラムの内容</td>
-              </tr>
-              <tr class="active">
-                <td>7</td>
-                <td>カラムの内容</td>
-                <td>カラムの内容</td>
-                <td>カラムの内容</td>
-              </tr>
-            </tbody>
-          </table> 
-        </div>
-*/
+
+function addTableHead() {
+  console.log("addTableHead");
+  var head = resultTable.insertRow(0);
+  head.className = "info";
+  var cell1 = head.insertCell(0);
+  var cell2 = head.insertCell(1);
+  var cell3 = head.insertCell(2);
+  cell1.innerHTML = "名前";
+  cell2.innerHTML = "カテゴリ";
+  cell3.innerHTML = "住所";
+}
