@@ -2,7 +2,8 @@ function startFunc(){
     getLocation();
 }
 function getLocation(){
-    document.getElementById("area_name").innnerHTML = 'get your potition';
+    var message = "get your potition";
+    document.getElementById("area_name").innnerHTML = message;
 
     if(navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(successCallback,errorCallback);
@@ -19,7 +20,7 @@ function successCallback(pos) {
 }
 
 function errorCallback(srror) {
-    message = "not available potition";
+    var message = "not available potition";
     document.getElementById("area_name").iinerHTML = massage;
 }
 
@@ -27,28 +28,60 @@ function initializeGoogleMap(x,y) {
     var useragent = navigator.userAgent;
     document.getElementById("area_name").innnerHTML = 'fetch google map';
 
-    var myLatLng = new google.maps.LatLng(x,y);
+    var myLatlng = new google.maps.LatLng(x,y);
     var mapOptions = {
         zoom: 17,
-        center: myLatLng,
+        center: myLatlng,
         mapTypeId: google.maps.MapTypeId.ROADMAP
     }
 
     var map = new google.maps.Map(document.getElementById("map_canvas"), mapOptions);
-
-    var marker = new google.maps.maps.Marker({
-        position: myLatLng,
-        map: map,
-        title:"your position"
+    var marker = new google.maps.Marker({
+        position: myLatlng,
+        draggable:true,
+        map: map
     });
+    infotable(marker.getPosition().lat(),
+              marker.getPosition().lng());
+              getAreaName(myLatlng);              
+
+    google.maps.event.addListener(map,'click',
+    function(event){
+        if(marker){marker.setMap(null)};
+        myLatlng = event.latLng;
+        marker = new google.maps.Marker({
+            position:event.latLng,
+            draggable:true,
+            map: map
+        });
+    infotable(marker.getPosition().lat(),
+              marker.getPosition().lng());
+              getAreaName(myLatlng);
+
+    //マーカー移動後に座標を取得するイベントの登録
+    /*TODO: ここでおそらく正しく取得ができていない*/
+    google.maps.event.addListener(marker,'dragend',
+    function(event){
+        infotable(marker.getPosition().lat(),
+                  marker.getPosition().lng());
+                  getAreaName(event.latLng);
+    })
     getAreaName(myLatlng);
+})
+
+}
+function infotable(lat,lng,level){
+    document.getElementById('id_lat').innerHTML = lat;
+    document.getElementById('id_lng').innerHTML = lng;
 }
 
 function getAreaName(latLngNow){
     var geocoder = new google.maps.Geocoder();
-    geocorder.geocode({latLng: latLngNow},function(results,status){
+    geocoder.geocode({ 'location': latLngNow},
+    function(results,status){
         if(status == google.maps.GeocoderStatus.OK){
-            document.getElementById("area_name").innnerHTML = resulets[0].formatted_address+'near';
+            document.getElementById("area_name").innnerHTML = results[0].formatted_address+'near';
+            document.getElementById('id_address').innerHTML = results[0].formatted_address.replace(/^日本, /, '');
         } else {
             document.getElementById("area_name").innnerHTML = 'error';
         }
