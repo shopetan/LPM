@@ -20,7 +20,7 @@ window.onload = function(){
 
 // milkcocoa のテストデータを push する
 function TestDataPush() {
-  lpmDataStore.push({id:"3", name:"黄色い傘", category:"傘", lat:"36.10636387079253", lng:"140.1116754859686", address:"〒305-0005 茨城県つくば市天久保４丁目５−１８"})
+  lpmDataStore.push({id:"7", name:"黒い鍵", category:"鍵", lat:"", lng:"", address:""})
 }
 
 // 検索結果のテーブルをリセットする
@@ -98,11 +98,9 @@ function search(cat, cateName, addr, namae){
 	resultBoardInit();
 
 	// 検索して結果を表示する
-  lpmDataStore.stream().size(20).next(function(err, lpm) {
+  lpmDataStore.stream().size(100).next(function(err, lpm) {
   	//console.log(lpm);
   	lpm.forEach(function(lp) {
-  		//console.log("全部-----" + lp.value.category + " " + lp.value.address);
-  		//console.log(cat + addr)
   		if(((lp.value.name).indexOf(namae) != -1 || namae === "") && ((lp.value.address).indexOf(addr) != -1  || addr === "") && (cateName === lp.value.category || cat === 0)){
         if(lpcount === 0) {
           console.log("aaaa");
