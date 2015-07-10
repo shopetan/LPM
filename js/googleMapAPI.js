@@ -30,7 +30,7 @@ function initializeGoogleMap(x,y) {
 
     var myLatlng = new google.maps.LatLng(x,y);
     var mapOptions = {
-        zoom: 17,
+        zoom: 16,
         center: myLatlng,
         mapTypeId: google.maps.MapTypeId.ROADMAP
     }
@@ -41,10 +41,8 @@ function initializeGoogleMap(x,y) {
         draggable:true,
         map: map
     });
-    infotable(marker.getPosition().lat(),
-              marker.getPosition().lng());
-              getAreaName(myLatlng);
 
+    //先にマップをクリックした時の処理
     google.maps.event.addListener(map,'click',
     function(event){
         if(marker){marker.setMap(null)};
@@ -54,19 +52,47 @@ function initializeGoogleMap(x,y) {
             draggable:true,
             map: map
         });
-    infotable(marker.getPosition().lat(),
-              marker.getPosition().lng());
-              getAreaName(myLatlng);
-
-    //マーカー移動後に座標を取得するイベントの登録
-    google.maps.event.addListener(marker,'dragend',
-    function(event){
+        google.maps.event.addListener(marker,'dragend',
+        function(event){
+            infotable(marker.getPosition().lat(),
+                      marker.getPosition().lng());
+            getAreaName(event.latLng);
+        });
         infotable(marker.getPosition().lat(),
                   marker.getPosition().lng());
-                  getAreaName(event.latLng);
-    })
+        getAreaName(event.latLng);
+    });
+
+    //先にマーカードラッグが発生した場合の処理
+    google.maps.event.addListener(marker,'dragend',
+    function(event){
+        google.maps.event.addListener(map,'click',
+        function(event){
+            if(marker){marker.setMap(null)};
+            myLatlng = event.latLng;
+            marker = new google.maps.Marker({
+                position:event.latLng,
+                draggable:true,
+                map: map
+            });
+            google.maps.event.addListener(marker,'dragend',
+            function(event){
+                infotable(marker.getPosition().lat(),
+                          marker.getPosition().lng());
+                getAreaName(event.latLng);
+            });
+            infotable(marker.getPosition().lat(),
+                      marker.getPosition().lng());
+            getAreaName(event.latLng);
+        });
+        infotable(marker.getPosition().lat(),
+                  marker.getPosition().lng());
+        getAreaName(event.latLng);
+    });
+
+    infotable(marker.getPosition().lat(),
+              marker.getPosition().lng());
     getAreaName(myLatlng);
-})
 
 }
 function infotable(lat,lng,level){
