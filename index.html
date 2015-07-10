@@ -9,10 +9,13 @@
 
     <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
     <script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+    <script src="honoka/js/bootstrap.min.js"></script>
+    <script src="https://cdn.auth0.com/js/lock-7.5.min.js"></script>
+    <script src="https://cdn.mlkcca.com/v2.0.0/milkcocoa.js"></script>
     <script type="text/javascript" src="js/common.js"></script>
 
   </head>
-  <body>
+  <body class="no-thank-yu">
     <div class="container">
     <!-- navbar -->
     <script type="text/javascript">
@@ -24,11 +27,11 @@
           <div class="row">
             <div class="col-xs-12 outline">
               <h1>Lost Property with Milk</h1>
-              <p>その落し物，シェアして持ち主まで届けませんか?</p>
-              <p>LPMは，落し物を共有し合えるWebサービスです．</p>
+              <p>その落し物、シェアして持ち主まで届けませんか?</p>
+              <p>LPMは、落し物を共有し合えるWebサービスです。</p>
               <div class="download">
                 <a href="https://github.com/shopetan/LPM" class="btn btn-warning btn-lg"><i class="fa fa-github-alt"></i> Clone from GitHub</a>
-                <a href="/result.html" class="btn btn-primary btn-lg"><i class="fa fa-play"></i> 落し物を検索する．</a>
+                <a href="/result.html" class="btn btn-primary btn-lg"><i class="fa fa-play"></i> 落し物を検索する</a>
               </div>
               <div class="basedon small">
                 Based on <a href="https://github.com/shopetan/LPM">Github</a> v0.0.1
@@ -42,5 +45,8 @@
       writeFooter();
     </script>
     </div>
+    <script type="text/javascript">
+       writeLoginMenu();
+    </script>
   </body>
 </html>
