@@ -30,7 +30,7 @@ function initializeGoogleMap(x,y) {
 
     var myLatlng = new google.maps.LatLng(x,y);
     var mapOptions = {
-        zoom: 17,
+        zoom: 16,
         center: myLatlng,
         mapTypeId: google.maps.MapTypeId.ROADMAP
     }
