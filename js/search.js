@@ -10,12 +10,12 @@ var lpcount;
 window.onload = function(){
   //TestDataPush();
 	nameTextArea = document.getElementById("name");
-  categoryArea = document.forms.form.select;
-  addrTextArea = document.getElementById("address");
-  resultHeader = document.getElementById("result_p");
-  resultTable = document.getElementById('search_result');
-  $("#null_alert").css("display", "none");
-  ShowAllData();
+	categoryArea = document.forms.form.select;
+	addrTextArea = document.getElementById("address");
+	resultHeader = document.getElementById("result_p");
+	resultTable = document.getElementById('search_result');
+	$("#null_alert").css("display", "none");
+	ShowAllData();
 }
 
 // milkcocoa のテストデータを push する
@@ -109,7 +109,7 @@ function search(cat, cateName, addr, namae){
   			}
         console.log("name match" + lp.value.name + namae);
   			addText(lpcount, lp.value.name, lp.value.category, lp.value.address, lp.value.lat, lp.value.lng);
-  			lpcount++;  			
+  			lpcount++;
   		}
   	});
   	//検索結果が1件も見つからなかったとき
@@ -132,5 +132,3 @@ function searchError() {
 function clickCloseAlert() {
   $('#null_alert').css("display", "none");
 }
-
-
