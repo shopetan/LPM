@@ -1,9 +1,8 @@
 var milkcocoa = new MilkCocoa("noteibxtd2w3.mlkcca.com");
 var lpmDataStore = milkcocoa.dataStore("LostProperty");
-var name,category,imagePath,pickUpLatitude,pickUpLongitude,pickUpAddress;
-
 
 function clickEvent(){
+	var name,category,imagePath,pickUpLatitude,pickUpLongitude,pickUpAddress;
 	name = document.getElementById("nameArea");
 	category = document.getElementById("selectArea");
 	imagePath = document.getElementById("fileInput");
@@ -11,7 +10,6 @@ function clickEvent(){
 	pickUpLongitude = document.getElementById("id_lng");
 	pickUpAddress = document.getElementById("id_address");
 
-	console.log(name);
 	sendData(name.value,category.value,imagePath.value,pickUpLatitude.value,pickUpLongitude.value,pickUpAddress.value);
 }
 function sendData(name,category,imagePath,pickUpLatitude,pickUpLongitude,pickUpAddress){
