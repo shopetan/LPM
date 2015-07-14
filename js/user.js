@@ -10,5 +10,18 @@ $(document).ready(function () {
         $("#icon").attr("src", user_data.icon_path);
       });
     }
+    else {
+      $(".container").css("display","none");
+      var lock = new Auth0Lock('QuLn6EjHuNxY8Ljh935OR5mWwiuAXhnK', 'prpr-man.auth0.com');
+      lock.show({authParams: {scope: 'openid profile'}}, function (err, profile, token) {
+        milkcocoa.authWithToken(token, function(err, user) {
+          if(err){
+            console.log(err);
+            return;
+          }
+          window.location.href = "index.html";
+        });
+      });
+    }
   });
 });

@@ -1,7 +1,4 @@
 <?php
-	//header('Content-Type: application/json');
-	//header('Access-Control-Allow-Origin: *');
-
 	$url = $_POST['url'];
 	$file_name = $_POST['file_name'];
 
