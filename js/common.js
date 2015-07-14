@@ -55,7 +55,6 @@ function setUserInfo(user, milkcocoa) {
   var user_data = milkcocoa.dataStore('user').child(user.user_id);
   user_data.stream().size(1).next(function(err, data) {
     if(data.length == 0) {
-
       $.ajax({
         url: 'downloader.php',
         type: 'POST',
@@ -69,7 +68,6 @@ function setUserInfo(user, milkcocoa) {
       user_data.push({'name' : user.name,
                       'icon_path' : 'images/user_icons/' + user.user_id,
                       'rank' : '1'});
-
     }
   });
 }
