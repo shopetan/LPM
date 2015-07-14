@@ -51,6 +51,28 @@ function _logoutManager(){
   document.body.appendChild(element);
 }
 
+function setUserInfo(user, milkcocoa) {
+  var user_data = milkcocoa.dataStore('user').child(user.user_id);
+  user_data.stream().size(1).next(function(err, data) {
+    if(data.length == 0) {
+
+      $.ajax({
+        url: 'downloader.php',
+        type: 'POST',
+        dataType: 'json',
+        data: { 
+          url: user.picture,
+          file_name: user.user_id
+        }
+      });
+      
+      user_data.push({'name' : user.name,
+                      'icon_path' : 'images/user_icons/' + user.user_id,
+                      'rank' : '1'});
+
+    }
+  });
+}
 
 function writeLoginMenu() {
   var milkcocoa = new MilkCocoa("blueib3a6u4k.mlkcca.com");
@@ -61,6 +83,7 @@ function writeLoginMenu() {
       _loginManager();
     }
     if(user) {
+      setUserInfo(user, milkcocoa);
       _logoutManager();
     } else {
       _loginManager();
