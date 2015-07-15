@@ -10,7 +10,7 @@ function clickEvent(){
 	pickUpLongitude = document.getElementById("id_lng");
 	pickUpAddress = document.getElementById("id_address");
 
-	sendData(name.value,category.value,imagePath.value,pickUpLatitude.value,pickUpLongitude.value,pickUpAddress.value);
+	sendData(name.value,category.value,imagePath.value,pickUpLatitude.innerHTML,pickUpLongitude.innerHTML,pickUpAddress.innerHTML);
 }
 function sendData(name,category,imagePath,pickUpLatitude,pickUpLongitude,pickUpAddress){
 	lpmDataStore.push({
