@@ -13,7 +13,7 @@
     <script src="https://cdn.auth0.com/js/lock-7.5.min.js"></script>
     <script src="https://cdn.mlkcca.com/v2.0.0/milkcocoa.js"></script>
     <script type="text/javascript" src="js/common.js"></script>
-    <script type="text/javascript" src="js/user.js"></script>
+    <script type="text/javascript" src="js/edit.js"></script>
 
   </head>
   <body>
@@ -22,31 +22,38 @@
     <script type="text/javascript">
       writeNavbar();
     </script>
-    <!-- user_main -->
+    <!-- user_edit -->
 
     
-    <div class="row">
-      <div class="col-md-3">
-        <div class="panel panel-default">
-          <div class="panel-body">
-            <img id="icon" src="" alt="icon" class="center-block img-circle avatar" style="max-width: 48px; height: auto;">
-             <h3 class="text-center" id="name"></h3>
-             <p class="text-center" id="rank"><strong>Rank: </Strong></p>
-             <div class="text-right">
-              <button class="btn btn-primary active" role="button" onclick="window.location.href='user_edit.html'">Edit</button>
+    <div class="panel panel-default">
+      <div class="panel-body">
+        <div class="row">
+          <div class="col-md-3">
+            <div class="text-center">
+              <img id="icon" src="" class="avatar img-circle" alt="avatar" style="max-width: 48px; height: auto;">
+              <h6>アイコンのアップロード</h6>
+              <input id="input_icon" type="file" class="form-control">
             </div>
-           </div>
-        </div>
-      </div>
-      <div class="col-md-9">
-        <div class="panel panel-default">
-          <div class="panel-body">
-            <h1>最近の活動</h1>
+          </div>
+      
+          <div class="col-md-9 personal-info"> 
+            <form class="form-horizontal" role="form">
+              <div class="form-group">
+                <label class="col-lg-1 control-label">name:</label>
+                <div class="col-lg-11">
+                  <input id="name" class="form-control" type="text" value="">
+                </div>
+              </div>
+              <div class="text-right">
+              <button id="submit" type="button" class="btn btn-primary active" role="button">Save</button>
+            </div>
+            </form>
           </div>
         </div>
       </div>
     </div>
 
+    </div>
 
       <!-- footer -->
     <script type="text/javascript">
