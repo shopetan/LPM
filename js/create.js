@@ -8,7 +8,7 @@ function clickEvent(){
 	imagePath = document.getElementById("fileInput");
 	pickUpLatitude = document.getElementById("id_lat");
 	pickUpLongitude = document.getElementById("id_lng");
-	pickUpAddress = document.getElementById("id_address");
+	pickUpAddress = document.getElementById("area_name");
 
 	sendData(name.value,category.value,imagePath.value,pickUpLatitude.innerHTML,pickUpLongitude.innerHTML,pickUpAddress.innerHTML);
 }

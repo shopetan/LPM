@@ -105,8 +105,7 @@ function getAreaName(latLngNow){
     geocoder.geocode({ 'location': latLngNow},
     function(results,status){
         if(status == google.maps.GeocoderStatus.OK){
-            document.getElementById("area_name").innerHTML = results[0].formatted_address+'near';
-            document.getElementById('id_address').innerHTML = results[0].formatted_address.replace(/^日本, /, '');
+            document.getElementById('area_name').innerHTML = results[0].formatted_address.replace(/^日本, /, '');
 
         } else {
             document.getElementById("area_name").innerHTML = 'error';
