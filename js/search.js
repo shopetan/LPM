@@ -153,8 +153,7 @@ function search(cat, cateName, addr, namae){
 	// 検索して結果を表示する
   lpmDataStore.stream().size(100).next(function(err, lpm) {
   	lpm.forEach(function(lp) {
-      console.log(namae)
-  		if(((lp.value.name).indexOf(namae) != -1 || namae === "") && ((lp.value.address).indexOf(addr) != -1  || addr === "") && (cateName === lp.value.category || cat === 0)){
+  		if(((lp.value.name).indexOf(namae) != -1 || namae === "") && ((lp.value.pickUpAddress).indexOf(addr) != -1  || addr === "") && (cateName === lp.value.category || cat === 0)){
         if(lpcount === 0) {
           addTableHead();
           lpcount++;
