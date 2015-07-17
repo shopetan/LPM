@@ -79,6 +79,7 @@ function writeLoginMenu() {
     if(err){
       console.log(err);
       _loginManager();
+      return;
     }
     if(user) {
       setUserInfo(user, milkcocoa);
