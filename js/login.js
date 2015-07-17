@@ -3,8 +3,8 @@ $('.dropdown-menu').find('form').click(function (e) {
   e.stopPropagation();
 });
 
-var lock = new Auth0Lock('QuLn6EjHuNxY8Ljh935OR5mWwiuAXhnK', 'prpr-man.auth0.com');
-var milkcocoa = new MilkCocoa("blueib3a6u4k.mlkcca.com");
+var lock = new Auth0Lock('PhvoZNiNCYm0qXBVmsBXP7ZO0MJAiACe', 'shopetan.auth0.com');
+var milkcocoa = new MilkCocoa("noteibxtd2w3.mlkcca.com");
 
 lock.show({
   container: 'root',

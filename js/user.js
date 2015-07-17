@@ -1,6 +1,6 @@
 $(document).ready(function () {
-  var milkcocoa = new MilkCocoa("blueib3a6u4k.mlkcca.com");
-  
+  var milkcocoa = new MilkCocoa("noteibxtd2w3.mlkcca.com");
+
   milkcocoa.user(function(err, user) {
     if(user) {
       milkcocoa.dataStore("user").child(user.user_id).stream().size(1).next(function(err, data) {
@@ -12,7 +12,7 @@ $(document).ready(function () {
     }
     else {
       $(".container").css("display","none");
-      var lock = new Auth0Lock('QuLn6EjHuNxY8Ljh935OR5mWwiuAXhnK', 'prpr-man.auth0.com');
+      var lock = new Auth0Lock('PhvoZNiNCYm0qXBVmsBXP7ZO0MJAiACe', 'shopetan.auth0.com');
       lock.show({authParams: {scope: 'openid profile'}}, function (err, profile, token) {
         milkcocoa.authWithToken(token, function(err, user) {
           if(err){

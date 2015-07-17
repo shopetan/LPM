@@ -59,12 +59,12 @@ function setUserInfo(user, milkcocoa) {
         url: 'downloader.php',
         type: 'POST',
         dataType: 'json',
-        data: { 
+        data: {
           url: user.picture,
           file_name: user.user_id
         }
       });
-      
+
       user_data.push({'name' : user.name,
                       'icon_path' : 'images/user_icons/' + user.user_id,
                       'rank' : '1'});
@@ -73,7 +73,7 @@ function setUserInfo(user, milkcocoa) {
 }
 
 function writeLoginMenu() {
-  var milkcocoa = new MilkCocoa("blueib3a6u4k.mlkcca.com");
+  var milkcocoa = new MilkCocoa("noteibxtd2w3.mlkcca.com");
 
   milkcocoa.user(function(err, user) {
     if(err){
