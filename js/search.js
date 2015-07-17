@@ -1,26 +1,33 @@
 var milkcocoa = new MilkCocoa("teaib383pmz.mlkcca.com");
 
 var lpmDataStore = milkcocoa.dataStore('lpm');
-var catDataStore = milkcocoa.dataStore('lpm/category');
-var addDataStore = milkcocoa.dataStore('lpm/address');
-var nameTextArea, categoryArea, addTextArea, board, resultTable;
-var lpcount;
+var nameTextArea, categoryArea, addTextArea, board, resultTable,latArea,lngArea, addrMapArea;
+var lpcount, page, tr;
 
 
 window.onload = function(){
   //TestDataPush();
+  page = 1;
 	nameTextArea = document.getElementById("name");
   categoryArea = document.forms.form.select;
   addrTextArea = document.getElementById("address");
   resultHeader = document.getElementById("result_p");
   resultTable = document.getElementById('search_result');
+  latArea = document.getElementById('id_lat');
+  lngArea = document.getElementById('id_lng');
+  addrMapArea = document.getElementById('id_address');
+  tr =  document.getElementsByClassName("main_row");
   $("#null_alert").css("display", "none");
+  $(".div_pagination").css("text-align", "center");
+  $("#page_prev").css("cursor", "pointer");
+  $("#page_next").css("cursor", "pointer");
   ShowAllData();
 }
 
 // milkcocoa のテストデータを push する
-function TestDataPush() {
-  lpmDataStore.push({id:"7", name:"黒い鍵", category:"鍵", lat:"", lng:"", address:""})
+function TestDataPush(name,category,imagePath, pickUpLatitude, pickUpLongitude, pickUpAddress) {
+  lpmDataStore.push({name:name, category:category, pickUpLatitude:pickUpLatitude, pickUpLongitude:pickUpLongitude, pickUpAddress
+    :pickUpAddress})
 }
 
 // 検索結果のテーブルをリセットする
@@ -37,33 +44,77 @@ function addTextResult(name, cate, addr) {
 function addTableHead() {
   var head = resultTable.insertRow(0);
   head.className = "info";
-  var cell1 = head.insertCell(0);
-  var cell2 = head.insertCell(1);
-  var cell3 = head.insertCell(2);
-  var cell4 = head.insertCell(3);
-  var cell5 = head.insertCell(4);
+  var cell1 = document.createElement("th");
+  var cell2 = document.createElement("th");
+  var cell3 = document.createElement("th");
+  var cell4 = document.createElement("th");
+  var cell5 = document.createElement("th");
   cell1.innerHTML = "名前";
   cell2.innerHTML = "カテゴリ";
   cell3.innerHTML = "住所";
   cell4.innerHTML = "緯度";
-  cell5.innerHTML = "軽度";
+  cell5.innerHTML = "経度";
+  head.appendChild(cell1);
+  head.appendChild(cell2);
+  head.appendChild(cell3);
+  head.appendChild(cell4);
+  head.appendChild(cell5);
 }
 
 // 落し物一覧を表示する
 function ShowAllData() {
   resultHeader.innerHTML = "落し物一覧";
-  lpmDataStore.stream().size(20).next(function(err, lpm) {
-    var count = 1;
+  var count = 1;
+  lpmDataStore.stream().size(100).next(function(err, lpm) {
     addTableHead();
     lpm.forEach(function(lp) {
-      addText(count, lp.value.name, lp.value.category, lp.value.address, lp.value.lat, lp.value.lng);
+      addText(lp.value.name, lp.value.category, lp.value.pickUpAddress, lp.value.pickUpLatitude, lp.value.pickUpLongitude);
+      count++;
+      console.log($('tr').size())
     })
+    drawTable();
   })
 }
 
+// ページネーションの prev を押したとき 
+$(document).on("click", "#page_prev" ,function() {
+  if(page > 1) {
+    page--;
+    drawTable();
+  }
+});
+
+// ページネーションの next を押したとき 
+$(document).on("click", "#page_next" ,function() {
+  console.log("huuun")
+  if(page < ($("tr").size() - 1) / 10) {
+    page++;
+    drawTable();
+  }
+});
+
+// テーブルを更新
+function drawTable() {
+  if(page === 1) {
+    $("#page_prev").addClass("disabled");
+  } else {
+    $("#page_prev").removeClass("disabled");
+  }
+  if(page > (($("tr").size() - 1) / 10)) {
+    $("#page_next").addClass("disabled");
+  } else {
+    $("#page_next").removeClass("disabled");
+  }
+  $("#now_page").html(page);
+  $("now_page").addClass("active");
+  $("tr").css("display", "none");
+  $("tr:first, tr:gt(" + (page - 1) * 10 + "):lt(10)").show();
+}
+
+
 // 検索結果の落し物の一覧を表示
-function addText(i, name, category, address, latitude, longitude){
-  var row = resultTable.insertRow(i);
+function addText(name, category, address, latitude, longitude){
+  var row = resultTable.insertRow(-1);
   var cell1 = row.insertCell(0);
   var cell2 = row.insertCell(1);
   var cell3 = row.insertCell(2);
@@ -74,6 +125,10 @@ function addText(i, name, category, address, latitude, longitude){
   cell3.innerHTML = address;
   cell4.innerHTML = latitude;
   cell5.innerHTML = longitude;
+  row.className = "main_row";
+  //var b = $("tr")
+  //console.log(b)
+  //console.log($('tr').size())
 }
 
 // search ボタンをクリックしたとき
@@ -82,13 +137,17 @@ function clickSearch(){
   var cateNo = categoryArea.selectedIndex;
   var cateName = categoryArea.options[cateNo].value;
   var addr = addrTextArea.value;
+  var imagePath = "";
+  var pickUpLatitude = latArea.innerHTML;
+  var pickUpLongitude = lngArea.innerHTML;
+  var pickUpAddress = addrMapArea.innerHTML;
+  //TestDataPush(name, cateName, imagePath, pickUpLatitude, pickUpLongitude, pickUpAddress);
   lpcount = 0;
   if(name === "" && cateNo === 0 && addr === "") {
     searchError();
   } else {
     addTextResult(name, cateName, addr);
     search(cateNo, cateName, addr, name);
-    //console.log("条件" + cateNo + addr + name);
   }
 }
 
@@ -103,12 +162,11 @@ function search(cat, cateName, addr, namae){
   	lpm.forEach(function(lp) {
   		if(((lp.value.name).indexOf(namae) != -1 || namae === "") && ((lp.value.address).indexOf(addr) != -1  || addr === "") && (cateName === lp.value.category || cat === 0)){
         if(lpcount === 0) {
-          console.log("aaaa");
           addTableHead();
           lpcount++;
   			}
-        console.log("name match" + lp.value.name + namae);
-  			addText(lpcount, lp.value.name, lp.value.category, lp.value.address, lp.value.lat, lp.value.lng);
+        console.log(lp.value.pickUpLatitude);
+  			addText(lp.value.name, lp.value.category, lp.value.address, lp.value.pickUpLatitude, lp.value.pickUpLongitude);
   			lpcount++;  			
   		}
   	});
