@@ -70,7 +70,6 @@ function ShowAllData() {
     lpm.forEach(function(lp) {
       addText(lp.value.name, lp.value.category, lp.value.pickUpAddress, lp.value.pickUpLatitude, lp.value.pickUpLongitude);
       count++;
-      console.log($('tr').size())
     })
     drawTable();
   })
@@ -86,7 +85,6 @@ $(document).on("click", "#page_prev" ,function() {
 
 // ページネーションの next を押したとき
 $(document).on("click", "#page_next" ,function() {
-  console.log("huuun")
   if(page < ($("tr").size() - 1) / 10) {
     page++;
     drawTable();
@@ -126,9 +124,6 @@ function addText(name, category, address, latitude, longitude){
   cell4.innerHTML = latitude;
   cell5.innerHTML = longitude;
   row.className = "main_row";
-  //var b = $("tr")
-  //console.log(b)
-  //console.log($('tr').size())
 }
 
 // search ボタンをクリックしたとき
@@ -152,20 +147,17 @@ function clickSearch(){
 }
 
 function search(cat, cateName, addr, namae){
-  console.log(cat + cateName, addr, namae)
 	// Table をクリアにする
 	resultBoardInit();
 
 	// 検索して結果を表示する
   lpmDataStore.stream().size(100).next(function(err, lpm) {
-  	//console.log(lpm);
   	lpm.forEach(function(lp) {
   		if(((lp.value.name).indexOf(namae) != -1 || namae === "") && ((lp.value.address).indexOf(addr) != -1  || addr === "") && (cateName === lp.value.category || cat === 0)){
         if(lpcount === 0) {
           addTableHead();
           lpcount++;
   			}
-        console.log(lp.value.pickUpLatitude);
   			addText(lp.value.name, lp.value.category, lp.value.address, lp.value.pickUpLatitude, lp.value.pickUpLongitude);
   			lpcount++;
   		}
@@ -175,12 +167,10 @@ function search(cat, cateName, addr, namae){
   		resultHeader.innerHTML = "検索条件に合致する落し物が見つかりませんでした。";
   	}
   })
-  console.log("送信完了!");
 }
 
 // どの項目も入力されていないとき
 function searchError() {
-  console.log("ERROR");
   resultBoardInit();
   $("#null_alert").css("display", "block");
   ShowAllData();
