@@ -95,7 +95,6 @@ $(document).on("click", "#page_next" ,function() {
 
 // テーブルを更新
 function drawTable() {
-  console.log();
   if(page === 1) {
     $("#page_prev").addClass("disabled");
   } else {
@@ -109,11 +108,6 @@ function drawTable() {
   $("#now_page").html(page);
   $("now_page").addClass("active");
   $("tr").css("display", "none");
-  //$("tr").css("color", "red");
-  var a = $("tr").is(":visible");
-  var b = $("tr")
-  console.log(a + " " + b)
-  console.log(b)
   $("tr:first, tr:gt(" + (page - 1) * 10 + "):lt(10)").show();
 }
 
@@ -147,7 +141,7 @@ function clickSearch(){
   var pickUpLatitude = latArea.innerHTML;
   var pickUpLongitude = lngArea.innerHTML;
   var pickUpAddress = addrMapArea.innerHTML;
-  TestDataPush(name, cateName, imagePath, pickUpLatitude, pickUpLongitude, pickUpAddress);
+  //TestDataPush(name, cateName, imagePath, pickUpLatitude, pickUpLongitude, pickUpAddress);
   lpcount = 0;
   if(name === "" && cateNo === 0 && addr === "") {
     searchError();
