@@ -26,8 +26,8 @@
       writeNavbar();
     </script>
     <!-- search -->
-    <h1>落し物を検索する</h1>
     <div class="well">
+      <h1>落し物を検索する</h1>
       <p class="text-info">名前<textarea class="form-control" name="" id="name" cols="30" rows="1"></textarea></p>
       <p class="text-info">
         カテゴリ
@@ -46,6 +46,19 @@
         </select>
         </form>
       </p>
+      
+      <div class="form-group">
+          <label for="inputFindLPM" class="col-lg-2 control-label">地図から検索する</label>
+            <div class="col-lg-10 col-lg-offset-2">
+              緯度:<div id="id_lat"></div>
+              経度:<div id="id_lng"></div>
+              住所:<div id="id_address"></div>
+              <div id="map_canvas" style="width:100%; height:500px">
+                位置情報を取得中です…
+              </div>
+              log:<div id="area_name"></div>
+          </div>
+      </div>
 
       <p class="text-info">住所<textarea class="form-control" name="" id="address" cols="30" rows="1">つくば市</textarea></p>
 
@@ -57,6 +70,13 @@
     </div>
     <h2 id="result_p" class="text-primary"></h2>
     <table class="table table-striped table-hover " id="search_result"></table>
+    <div class="div_pagination">
+    <ul class="pagination">
+      <li id="page_prev"><span>«</span></li>
+      <li><span id="now_page"></span></li>
+      <li id="page_next"><span>»</span></li>
+    </ul>
+    </div>
     <!-- result -->
 
 
