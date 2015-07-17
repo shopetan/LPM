@@ -15,7 +15,7 @@ window.onload = function(){
   resultTable = document.getElementById('search_result');
   latArea = document.getElementById('id_lat');
   lngArea = document.getElementById('id_lng');
-  addrMapArea = document.getElementById('id_address');
+  addrMapArea = document.getElementById('area_name');
   tr =  document.getElementsByClassName("main_row");
   $("#null_alert").css("display", "none");
   $(".div_pagination").css("text-align", "center");
@@ -153,6 +153,7 @@ function search(cat, cateName, addr, namae){
 	// 検索して結果を表示する
   lpmDataStore.stream().size(100).next(function(err, lpm) {
   	lpm.forEach(function(lp) {
+      console.log(namae)
   		if(((lp.value.name).indexOf(namae) != -1 || namae === "") && ((lp.value.address).indexOf(addr) != -1  || addr === "") && (cateName === lp.value.category || cat === 0)){
         if(lpcount === 0) {
           addTableHead();
