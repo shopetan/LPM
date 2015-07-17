@@ -1,6 +1,11 @@
 # LPM
+
 その落し物，シェアして持ち主まで届けませんか?
+
+
 http://lpmilk.tk
+
+# Description
 
 LPMは，ユーザが自由に落し物情報を登録し，落し物を共有しあうサービスです．
 LPMの主な機能は以下の3つです．
@@ -13,9 +18,14 @@ LPMの主な機能は以下の3つです．
 落し物情報のシェアで世の中をちょっぴり良くしていきませんか?
 
 # 使用している技術など
-Backend:milkcocoa https://mlkcca.com
 
-UI:Bootstrap Theme with Japanese "Honoka" http://honokak.osaka
+Backend: milkcocoa
+
+https://mlkcca.com
+
+UI: Bootstrap Theme with Japanese "Honoka"
+
+http://honokak.osaka
 
 # Development
 
@@ -32,6 +42,7 @@ or if you have write privileges:
 > git clone git@github.com:shopetan/LPM.git
 
 # Contributers
+
 shopetan:<https://github.com/shopetan>
 
 prpr_man:<https://github.com/prpr_man>
