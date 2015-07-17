@@ -1,4 +1,4 @@
-var milkcocoa = new MilkCocoa("teaib383pmz.mlkcca.com");
+var milkcocoa = new MilkCocoa("noteibxtd2w3.mlkcca.com");
 
 var lpmDataStore = milkcocoa.dataStore('lpm');
 var nameTextArea, categoryArea, addTextArea, board, resultTable,latArea,lngArea, addrMapArea;
