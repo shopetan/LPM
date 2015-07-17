@@ -15,5 +15,5 @@ milkcocoa.user(function(err, user) {
 
 $("#logout").click(function(){
   milkcocoa.logout();
-  window.location.href = "https://prpr-man.auth0.com/v2/logout?returnTo=http://localhost:8080/LPM/index.html";
+  window.location.href = "https://shopetan.auth0.com/v2/logout?returnTo=http://lpmilk.tk/index.html";
 });
