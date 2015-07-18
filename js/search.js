@@ -1,7 +1,7 @@
 var milkcocoa = new MilkCocoa("teaib383pmz.mlkcca.com");
 
 var lpmDataStore = milkcocoa.dataStore('lpm');
-var nameTextArea, categoryArea, addTextArea, board, resultTable,latArea,lngArea, addrMapArea;
+var nameTextArea, categoryArea, addrRadioArea0, addrRadioArea1, addrRadioArea2, addTextArea, board, resultTable,latArea,lngArea, addrMapArea;
 var lpcount, page, tr;
 
 
@@ -9,7 +9,10 @@ window.onload = function(){
   //TestDataPush();
   page = 1;
 	nameTextArea = document.getElementById("name");
-  categoryArea = document.forms.form.select;
+  categoryArea = document.forms.formCategory.select;
+  addressRadioArea0 = document.forms.formAddress.notSelectRadioBtn.checked;
+  addressRadioArea1 = document.forms.formAddress.wordRadioBtn.checked;
+  addressRadioArea2 = document.forms.formAddress.mapRadioBtn.checked;
   addrTextArea = document.getElementById("address");
   resultHeader = document.getElementById("result_p");
   resultTable = document.getElementById('search_result');
@@ -18,6 +21,7 @@ window.onload = function(){
   addrMapArea = document.getElementById('area_name');
   tr =  document.getElementsByClassName("main_row");
   $("#null_alert").css("display", "none");
+  $("#map_div").css("display", "none");
   $(".div_pagination").css("text-align", "center");
   $("#page_prev").css("cursor", "pointer");
   $("#page_next").css("cursor", "pointer");
@@ -65,7 +69,7 @@ function addTableHead() {
 function ShowAllData() {
   resultHeader.innerHTML = "落し物一覧";
   var count = 1;
-  lpmDataStore.stream().size(100).next(function(err, lpm) {
+  lpmDataStore.stream().size(999).next(function(err, lpm) {
     addTableHead();
     lpm.forEach(function(lp) {
       addText(lp.value.name, lp.value.category, lp.value.pickUpAddress, lp.value.pickUpLatitude, lp.value.pickUpLongitude);
@@ -104,7 +108,7 @@ function drawTable() {
     $("#page_next").removeClass("disabled");
   }
   $("#now_page").html(page);
-  $("now_page").addClass("active");
+  $("#now_page").addClass("active");
   $("tr").css("display", "none");
   $("tr:first, tr:gt(" + (page - 1) * 10 + "):lt(10)").show();
 }
@@ -138,7 +142,7 @@ function clickSearch(){
   var pickUpAddress = addrMapArea.innerHTML;
   //TestDataPush(name, cateName, imagePath, pickUpLatitude, pickUpLongitude, pickUpAddress);
   lpcount = 0;
-  if(name === "" && cateNo === 0 && addr === "") {
+  if(name === "" && cateNo === 0 && ((addressRadioArea1 === true && addr === "") || addressRadioArea0 === true)) {
     searchError();
   } else {
     addTextResult(name, cateName, addr);
@@ -151,14 +155,14 @@ function search(cat, cateName, addr, namae){
 	resultBoardInit();
 
 	// 検索して結果を表示する
-  lpmDataStore.stream().size(100).next(function(err, lpm) {
+  lpmDataStore.stream().size(999).next(function(err, lpm) {
   	lpm.forEach(function(lp) {
   		if(((lp.value.name).indexOf(namae) != -1 || namae === "") && ((lp.value.pickUpAddress).indexOf(addr) != -1  || addr === "") && (cateName === lp.value.category || cat === 0)){
         if(lpcount === 0) {
           addTableHead();
           lpcount++;
   			}
-  			addText(lp.value.name, lp.value.category, lp.value.address, lp.value.pickUpLatitude, lp.value.pickUpLongitude);
+  			addText(lp.value.name, lp.value.category, lp.value.pickUpAddress, lp.value.pickUpLatitude, lp.value.pickUpLongitude);
   			lpcount++;
   		}
   	});
@@ -180,3 +184,10 @@ function searchError() {
 function clickCloseAlert() {
   $('#null_alert').css("display", "none");
 }
+
+// 地図を表示/非表示
+$(document).on("click", "#mapRadioBtn" ,function() {
+//$("#mapRadioBtn").click(function() {
+  console.log("a");
+  $("#map_div").toggle();
+});
