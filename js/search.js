@@ -14,7 +14,7 @@ window.onload = function(){
   latArea = document.getElementById('id_lat');
   lngArea = document.getElementById('id_lng');
   addrMapArea = document.getElementById('area_name');
-  tr =  document.getElementsByClassName("main_row");
+  tr = document.getElementsByClassName("main_row");
   $("#null_alert").css("display", "none");
   $("#map_div").css("display", "none");
   $(".div_pagination").css("text-align", "center");
@@ -92,12 +92,14 @@ $(document).on("click", "#page_next" ,function() {
 
 // テーブルを更新
 function drawTable() {
+  console.log();
+  console.log(Math.floor(($("tr").size() - 1) / 10));
   if(page === 1) {
     $("#page_prev").addClass("disabled");
   } else {
     $("#page_prev").removeClass("disabled");
   }
-  if(page > (($("tr").size() - 1) / 10)) {
+  if((page > (($("tr").size() - 1) / 10)) || (Math.floor(($("tr").size() - 1) / 10) === 0)) {
     $("#page_next").addClass("disabled");
   } else {
     $("#page_next").removeClass("disabled");
@@ -182,6 +184,7 @@ function search(cat, cateName, addr, lat, lng, namae, addrNum){
   	if(lpcount === 0) {
   		resultHeader.innerHTML = "検索条件に合致する落し物が見つかりませんでした。";
   	}
+    drawTable();
   })
 }
 
