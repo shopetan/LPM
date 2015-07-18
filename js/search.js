@@ -1,6 +1,6 @@
 var milkcocoa = new MilkCocoa("noteibxtd2w3.mlkcca.com");
 
-var lpmDataStore = milkcocoa.dataStore('lpm');
+var lpmDataStore = milkcocoa.dataStore('LostProperty');
 var nameTextArea, categoryArea, addressRadioArea0, addressRadioArea1, addressRadioArea2, addTextArea, board, resultTable,latArea,lngArea, addrMapArea;
 var lpcount, page, tr;
 
