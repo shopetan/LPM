@@ -2,7 +2,6 @@
 
 その落し物，シェアして持ち主まで届けませんか?
 
-
 http://lpmilk.tk
 
 # Description
@@ -35,12 +34,15 @@ http://honokak.osaka
 
 You can check the latest sources with the command:
 
-> git clone https://github.com/shopetan/LPM.git
+```
+ git clone https://github.com/shopetan/LPM.git
+```
 
 or if you have write privileges:
 
-> git clone git@github.com:shopetan/LPM.git
-
+```
+ git clone git@github.com:shopetan/LPM.git
+```
 # Contributers
 
 shopetan:<https://github.com/shopetan>
