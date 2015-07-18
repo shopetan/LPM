@@ -28,6 +28,9 @@ http://honokak.osaka
 
 # Development
 
+##Release
+Now release [ver1.0](https://github.com/shopetan/LPM/releases/tag/v1.0)
+
 ## Code
 
 ### GIT
@@ -45,8 +48,8 @@ or if you have write privileges:
 ```
 # Contributers
 
-shopetan:<https://github.com/shopetan>
+[shopetan](https://github.com/shopetan)
 
-prpr_man:<https://github.com/prpr_man>
+[prpr_man](https://github.com/prpr_man)
 
-momenneko:<https://github.com/momenneko>
+[momenneko](https://github.com/momenneko)
