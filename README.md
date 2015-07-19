@@ -50,6 +50,6 @@ or if you have write privileges:
 
 [shopetan](https://github.com/shopetan)
 
-[prpr_man](https://github.com/prpr_man)
+[prpr-man](https://github.com/prpr-man)
 
 [momenneko](https://github.com/momenneko)
