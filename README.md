@@ -49,7 +49,7 @@ or if you have write privileges:
 # Contributors
 
 * [shopetan](https://github.com/shopetan)
-* [prpr-man](https://github.com/prpr_man)
+* [prpr-man](https://github.com/prpr-man)
 * [momenneko](https://github.com/momenneko)
 * [himkt](https://github.com/himkt)
 
