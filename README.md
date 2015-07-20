@@ -46,10 +46,13 @@ or if you have write privileges:
 ```
  git clone git@github.com:shopetan/LPM.git
 ```
-# Contributers
+# Contributors
 
-[shopetan](https://github.com/shopetan)
+* [shopetan](https://github.com/shopetan)
+* [prpr_man](https://github.com/prpr_man)
+* [momenneko](https://github.com/momenneko)
+* [himkt](https://github.com/himkt)
 
-[prpr_man](https://github.com/prpr_man)
+# License
 
-[momenneko](https://github.com/momenneko)
+MIT License. © 2015 LPM developer
