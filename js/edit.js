@@ -29,11 +29,15 @@ $(document).ready(function () {
               url: 'uploader.php',
               type: 'POST',
               data: fd,
-              dataType: 'text'
+              dataType: 'text',
+              success: function(data) {
+                window.location.href = "user_main.html";
+              },
+              error: function(data) {
+                window.location.href = "user_main.html";
+              }
             });
-          }
-
-          window.location.href = "user_main.html";
+          }          
         });
       });
     }
