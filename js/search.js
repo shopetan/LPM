@@ -67,7 +67,7 @@ function addTableHead() {
 function ShowAllData() {
   resultHeader.innerHTML = "落し物一覧";
   var count = 1;
-  lpmDataStore.stream().size(999).next(function(err, lpm) {
+  lpmDataStore.stream().sort("desc").size(999).next(function(err, lpm) {
     addTableHead();
     lpm.forEach(function(lp) {
       addText(lp.value.name, lp.value.category, lp.value.pickUpAddress);
@@ -76,7 +76,7 @@ function ShowAllData() {
         position: alldatas[count-1].position,
         map: allDataMap
       });
-      attachMessage(lpMarker, alldatas[count-1].content);
+      attachMessage(lpMarker, lp.value.name, lp.value.category, lp.value.pickUpAddress);
       count++;
     })
     drawTable();
@@ -183,7 +183,7 @@ function search(cat, cateName, addr, lat, lng, namae, addrNum){
 	resultBoardInit();
 
 	// 検索して結果を表示する
-  lpmDataStore.stream().size(999).next(function(err, lpm) {
+  lpmDataStore.stream().sort("desc").size(999).next(function(err, lpm) {
   	lpm.forEach(function(lp) {
       // 0.009度 =~ 1km
   		if(((lp.value.name).indexOf(namae) != -1 || namae === "") &&
@@ -202,7 +202,7 @@ function search(cat, cateName, addr, lat, lng, namae, addrNum){
             position: markers[lpcount-1].position,
             map: resultMap
           });
-          attachMessage(searchMarker, markers[lpcount-1].content);
+          attachMessage(searchMarker, lp.value.name, lp.value.category, lp.value.pickUpAddress);
           }
   			lpcount++;
   		}
@@ -248,10 +248,10 @@ $(document).on("click", "#wordRadioBtn" ,function() {
 });
 
 // 検索結果の地図上のマーカーをクリックした時
-function attachMessage(marker, msg) {
+function attachMessage(marker, name, category, address) {
   google.maps.event.addListener(marker, 'click', function(event) {
     new google.maps.InfoWindow({
-      content: msg
+      content: '<p class="text-info"><strong>' + name  + '</strong> (カテゴリ: ' + category + ')'  + '</p>'+ '' + address
     }).open(marker.getMap(), marker);
   });
 }
