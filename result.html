@@ -23,12 +23,14 @@
     <script type="text/javascript" src="js/common.js"></script>
     <script type="text/javascript" src="js/search.js"></script>
   </head>
+
   <body class="no-thank-yu">
     <div class="container">
     <!-- navbar -->
     <script type="text/javascript">
       writeNavbar();
     </script>
+
     <!-- search -->
     <div class="well">
       <p class="lead">落し物を検索する</p>
@@ -89,14 +91,19 @@
       </div>
     </div>
     <p class="lead text-info" id="result_p"></p>
-    <table class="table table-striped table-hover " id="search_result"></table>
-    <div class="div_pagination">
-    <ul class="pagination">
-      <li id="page_prev"><span>«</span></li>
-      <li><span id="now_page"></span></li>
-      <li id="page_next"><span>»</span></li>
-    </ul>
+    <p><a href="#result_p" class="btn btn-primary" id="resultmap_btn">地図で見る <i class="fa fa-arrows-h"> </i>リストで見る</a></p>
+    <div id="alldata_map" style="width:100%; height:500px; margin-bottom: 30px" ></div>
+    <div id="result_list">
+      <table class="table table-striped table-hover " id="search_result"></table>
+      <div class="div_pagination">
+      <ul class="pagination">
+        <li id="page_prev"><span>«</span></li>
+        <li><span id="now_page"></span></li>
+        <li id="page_next"><span>»</span></li>
+      </ul>
+      </div>
     </div>
+    <div id="result_map" style="width:100%; height:500px; margin-bottom: 30px" ></div>
     <!-- result -->
 
 

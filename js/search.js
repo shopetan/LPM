@@ -2,10 +2,18 @@ var milkcocoa = new MilkCocoa("noteibxtd2w3.mlkcca.com");
 
 var lpmDataStore = milkcocoa.dataStore('LostProperty');
 var nameTextArea, categoryArea, addressRadioArea0, addressRadioArea1, addressRadioArea2, addTextArea, board, resultTable,latArea,lngArea, addrMapArea;
-var lpcount, page, tr;
+var lpcount, page, tr, markers,resultMap, allDataMap;
 
 
 window.onload = function(){
+  markers = new Array();
+  alldatas = new Array();
+  allDataMap = new google.maps.Map(document.getElementById("alldata_map"), {
+    zoom: 8,
+    center: new google.maps.LatLng(36.083486, 140.076642),
+    scrollwheel: true,
+    mapTypeId: google.maps.MapTypeId.ROADMAP
+  });
   page = 1;
 	nameTextArea = document.getElementById("name");
   addrTextArea = document.getElementById("address");
@@ -17,6 +25,7 @@ window.onload = function(){
   tr = document.getElementsByClassName("main_row");
   $("#null_alert").css("display", "none");
   $("#map_div").css("display", "none");
+  $("#result_map").css("display", "none");
   $(".div_pagination").css("text-align", "center");
   $("#page_prev").css("cursor", "pointer");
   $("#page_next").css("cursor", "pointer");
@@ -36,7 +45,7 @@ function resultBoardInit() {
 
 // 検索条件を表示
 function addTextResult(name, cate, addr) {
-  resultHeader.innerHTML = "名前[" + name + "] カテゴリー["+ cate + "] 住所[" + addr + "]の検索結果";
+  resultHeader.innerHTML = "名前[" + name + "] カテゴリー["+ cate + "] 住所[" + addr + "] の検索結果";
 }
 
 // 検索結果のテーブルのヘッダーを表示する
@@ -68,9 +77,17 @@ function ShowAllData() {
     addTableHead();
     lpm.forEach(function(lp) {
       addText(lp.value.name, lp.value.category, lp.value.pickUpAddress, lp.value.pickUpLatitude, lp.value.pickUpLongitude);
+      alldatas.push({position: new google.maps.LatLng(lp.value.pickUpLatitude, lp.value.pickUpLongitude), content: lp.value.name});
+      var lpMarker = new google.maps.Marker({
+        position: alldatas[count-1].position,
+        map: allDataMap
+      });
+      attachMessage(lpMarker, alldatas[count-1].content);
       count++;
     })
     drawTable();
+    $("#alldata_map").show();
+    $("#resultmap_btn").hide();
   })
 }
 
@@ -92,8 +109,6 @@ $(document).on("click", "#page_next" ,function() {
 
 // テーブルを更新
 function drawTable() {
-  console.log();
-  console.log(Math.floor(($("tr").size() - 1) / 10));
   if(page === 1) {
     $("#page_prev").addClass("disabled");
   } else {
@@ -146,6 +161,20 @@ function clickSearch(){
   if(name === "" && cateNo === 0 && ((addressRadioArea1 === true && addr === "") || addressRadioArea0 === true)) {
     searchError();
   } else {
+    $("#resultmap_btn").hide();
+    $("#alldata_map").hide();
+    $("#search_result").show();
+    $(".div_pagination").show();
+    $("#result_map").hide();
+    // 地図から検索するときは検索結果の地図バージョンを作成
+    if(addressRadioArea2 === true) {
+      resultMap = new google.maps.Map(document.getElementById("result_map"), {
+        zoom: 12,
+        center: new google.maps.LatLng(pickUpLatitude, pickUpLongitude),
+        scrollwheel: true,
+        mapTypeId: google.maps.MapTypeId.ROADMAP
+      });
+    }
     if(addressRadioArea0 === true) {
       addTextResult(name, cateName, addr);
       search(cateNo, cateName, addr, pickUpLatitude, pickUpLongitude, name, 0);
@@ -168,7 +197,7 @@ function search(cat, cateName, addr, lat, lng, namae, addrNum){
   	lpm.forEach(function(lp) {
       // 0.009度 =~ 1km
   		if(((lp.value.name).indexOf(namae) != -1 || namae === "") &&
-         ((addrNum === 2 && (((lp.value.pickUpLatitude - lat) < 0.009) && ((lp.value.pickUpLatitude - lat) > -0.009)) && (((lp.value.pickUpLongitude - lng) < 0.009)) && ((lp.value.pickUpLongitude - lng) > -0.009)) ||
+         ((addrNum === 2 && (((lp.value.pickUpLatitude - lat) < 0.018) && ((lp.value.pickUpLatitude - lat) > -0.018)) && (((lp.value.pickUpLongitude - lng) < 0.018)) && ((lp.value.pickUpLongitude - lng) > -0.018)) ||
           (addrNum === 1 && (lp.value.pickUpAddress).indexOf(addr) != -1) ||
           (addrNum === 0 && addr === "")) &&
         (cateName === lp.value.category || cat === 0)){
@@ -177,14 +206,31 @@ function search(cat, cateName, addr, lat, lng, namae, addrNum){
           lpcount++;
   			}
   			addText(lp.value.name, lp.value.category, lp.value.pickUpAddress, lp.value.pickUpLatitude, lp.value.pickUpLongitude);
+        if(addressRadioArea2 === true) {
+          markers.push({position: new google.maps.LatLng(lp.value.pickUpLatitude, lp.value.pickUpLongitude), content: lp.value.name});
+          var searchMarker = new google.maps.Marker({
+            position: markers[lpcount-1].position,
+            map: resultMap
+          });
+          attachMessage(searchMarker, markers[lpcount-1].content);
+          }
   			lpcount++;
   		}
   	});
-  	//検索結果が1件も見つからなかったとき
+  	// 検索結果が1件も見つからなかったとき
   	if(lpcount === 0) {
   		resultHeader.innerHTML = "検索条件に合致する落し物が見つかりませんでした。";
+      $(".div_pagination").hide();
   	}
     drawTable();
+    // 地図検索のとき
+    if(addrNum === 2 && lpcount != 0) {
+      $("#resultmap_btn").show();
+      $("#result_map").show();
+      $("#result_list").hide();
+    } else {
+      $("#resultmap_btn").hide();
+    }
   })
 }
 
@@ -200,7 +246,7 @@ function clickCloseAlert() {
   $('#null_alert').css("display", "none");
 }
 
-// 地図を表示/非表示
+// 検索条件の地図を表示/非表示
 $(document).on("click", "#mapRadioBtn" ,function() {
   $("#map_div").show();
 });
@@ -210,3 +256,19 @@ $(document).on("click", "#notSelectRadioBtn" ,function() {
 $(document).on("click", "#wordRadioBtn" ,function() {
   $("#map_div").hide();
 });
+
+// 検索結果の地図上のマーカーをクリックした時
+function attachMessage(marker, msg) {
+  google.maps.event.addListener(marker, 'click', function(event) {
+    new google.maps.InfoWindow({
+      content: msg
+    }).open(marker.getMap(), marker);
+  });
+}
+
+// 検索結果の地図を表示/非表示
+$(document).on("click", "#resultmap_btn" ,function() {
+  $("#result_map").toggle();
+  $("#result_list").toggle();
+});
+
