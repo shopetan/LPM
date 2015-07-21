@@ -31,7 +31,7 @@
     </script>
     <!-- search -->
     <div class="well">
-      <h1>落し物を検索する</h1><br>
+      <p class="lead">落し物を検索する</p>
       <p class="text-info">名前<textarea class="form-control" name="" id="name" cols="30" rows="1"></textarea></p>
       <p class="text-info">
         カテゴリ
@@ -81,14 +81,14 @@
             </div>
         </div>
       </form>
-
-      <button type="submit"  class="btn btn-primary" name="button" onClick="clickSearch()">search</button>
+      <br>
+      <button type="submit"  class="btn btn-primary" name="button" onClick="clickSearch()">検索する</button>
       <div class="alert alert-dismissible alert-danger" id="null_alert">
         <button type="button" class="close" data-dismiss="alert" onclick="clickCloseAlert()">×</button>
         <strong>ERROR:</strong> 少なくとも1つ以上条件を追加してください。
       </div>
     </div>
-    <h2 id="result_p" class="text-primary"></h2>
+    <p class="lead text-info" id="result_p"></p>
     <table class="table table-striped table-hover " id="search_result"></table>
     <div class="div_pagination">
     <ul class="pagination">

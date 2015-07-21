@@ -202,5 +202,11 @@ function clickCloseAlert() {
 
 // 地図を表示/非表示
 $(document).on("click", "#mapRadioBtn" ,function() {
-  $("#map_div").toggle();
+  $("#map_div").show();
+});
+$(document).on("click", "#notSelectRadioBtn" ,function() {
+  $("#map_div").hide();
+});
+$(document).on("click", "#wordRadioBtn" ,function() {
+  $("#map_div").hide();
 });
