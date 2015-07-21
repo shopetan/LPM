@@ -55,18 +55,12 @@ function addTableHead() {
   var cell1 = document.createElement("th");
   var cell2 = document.createElement("th");
   var cell3 = document.createElement("th");
-  var cell4 = document.createElement("th");
-  var cell5 = document.createElement("th");
   cell1.innerHTML = "名前";
   cell2.innerHTML = "カテゴリ";
   cell3.innerHTML = "住所";
-  cell4.innerHTML = "緯度";
-  cell5.innerHTML = "経度";
   head.appendChild(cell1);
   head.appendChild(cell2);
   head.appendChild(cell3);
-  head.appendChild(cell4);
-  head.appendChild(cell5);
 }
 
 // 落し物一覧を表示する
@@ -76,7 +70,7 @@ function ShowAllData() {
   lpmDataStore.stream().size(999).next(function(err, lpm) {
     addTableHead();
     lpm.forEach(function(lp) {
-      addText(lp.value.name, lp.value.category, lp.value.pickUpAddress, lp.value.pickUpLatitude, lp.value.pickUpLongitude);
+      addText(lp.value.name, lp.value.category, lp.value.pickUpAddress);
       alldatas.push({position: new google.maps.LatLng(lp.value.pickUpLatitude, lp.value.pickUpLongitude), content: lp.value.name});
       var lpMarker = new google.maps.Marker({
         position: alldatas[count-1].position,
@@ -127,18 +121,14 @@ function drawTable() {
 
 
 // 検索結果の落し物の一覧を表示
-function addText(name, category, address, latitude, longitude){
+function addText(name, category, address){
   var row = resultTable.insertRow(-1);
   var cell1 = row.insertCell(0);
   var cell2 = row.insertCell(1);
   var cell3 = row.insertCell(2);
-  var cell4 = row.insertCell(3);
-  var cell5 = row.insertCell(4);
   cell1.innerHTML = name;
   cell2.innerHTML = category;
   cell3.innerHTML = address;
-  cell4.innerHTML = latitude;
-  cell5.innerHTML = longitude;
   row.className = "main_row";
 }
 
@@ -156,11 +146,11 @@ function clickSearch(){
   addressRadioArea0 = document.forms.formAddress.notSelectRadioBtn.checked;
   addressRadioArea1 = document.forms.formAddress.wordRadioBtn.checked;
   addressRadioArea2 = document.forms.formAddress.mapRadioBtn.checked;
-  //TestDataPush(name, cateName, imagePath, pickUpLatitude, pickUpLongitude, pickUpAddress);
   lpcount = 0;
   if(name === "" && cateNo === 0 && ((addressRadioArea1 === true && addr === "") || addressRadioArea0 === true)) {
     searchError();
   } else {
+    $('#null_alert').hide();
     $("#resultmap_btn").hide();
     $("#alldata_map").hide();
     $("#search_result").show();
@@ -205,7 +195,7 @@ function search(cat, cateName, addr, lat, lng, namae, addrNum){
           addTableHead();
           lpcount++;
   			}
-  			addText(lp.value.name, lp.value.category, lp.value.pickUpAddress, lp.value.pickUpLatitude, lp.value.pickUpLongitude);
+  			addText(lp.value.name, lp.value.category, lp.value.pickUpAddress);
         if(addressRadioArea2 === true) {
           markers.push({position: new google.maps.LatLng(lp.value.pickUpLatitude, lp.value.pickUpLongitude), content: lp.value.name});
           var searchMarker = new google.maps.Marker({
