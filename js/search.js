@@ -45,6 +45,9 @@ function resultBoardInit() {
 
 // 検索条件を表示
 function addTextResult(name, cate, addr) {
+  name = escape_html(name);
+  cate = escape_html(cate);
+  addr = escape_html(addr);
   resultHeader.innerHTML = "名前[" + name + "] カテゴリー["+ cate + "] 住所[" + addr + "] の検索結果";
 }
 
