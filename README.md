@@ -52,6 +52,8 @@ or if you have write privileges:
 * [prpr-man](https://github.com/prpr-man)
 * [momenneko](https://github.com/momenneko)
 * [himkt](https://github.com/himkt)
+* [Ryo Kato](https://github.com/clariroid)
+
 
 # License
 
