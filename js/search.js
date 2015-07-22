@@ -125,6 +125,7 @@ function escape_html(name){
      .replace( />/g, "&gt;" )
      .replace( /"/g, "&quot;" )
      .replace( /'/g, "&#x27;" );
+     .replace(/'/g, '&#39;');
 }
 
 // 検索結果の落し物の一覧を表示
@@ -134,8 +135,8 @@ function addText(name, category, address){
   var cell2 = row.insertCell(1);
   var cell3 = row.insertCell(2);
   cell1.innerHTML = escape_html(name);
-  cell2.innerHTML = category;
-  cell3.innerHTML = address;
+  cell2.innerHTML = escape_html(category);
+  cell3.innerHTML = escape_html(address);
   row.className = "main_row";
 }
 
