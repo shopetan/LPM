@@ -119,6 +119,13 @@ function drawTable() {
   $("tr:first, tr:gt(" + (page - 1) * 10 + "):lt(10)").show();
 }
 
+function escape_html(name){
+  return name.replace( /&/g, "&amp;" )
+     .replace( /</g, "&lt;" )
+     .replace( />/g, "&gt;" )
+     .replace( /"/g, "&quot;" )
+     .replace( /'/g, "&#x27;" );
+}
 
 // 検索結果の落し物の一覧を表示
 function addText(name, category, address){
@@ -126,7 +133,7 @@ function addText(name, category, address){
   var cell1 = row.insertCell(0);
   var cell2 = row.insertCell(1);
   var cell3 = row.insertCell(2);
-  cell1.innerHTML = name;
+  cell1.innerHTML = escape_html(name);
   cell2.innerHTML = category;
   cell3.innerHTML = address;
   row.className = "main_row";
@@ -261,4 +268,3 @@ $(document).on("click", "#resultmap_btn" ,function() {
   $("#result_map").toggle();
   $("#result_list").toggle();
 });
-
