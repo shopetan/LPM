@@ -123,11 +123,10 @@ function drawTable() {
 }
 
 function escape_html(name){
-  return name.replace( /&/g, "&amp;" )
-     .replace( /</g, "&lt;" )
-     .replace( />/g, "&gt;" )
-     .replace( /"/g, "&quot;" )
-     .replace( /'/g, "&#x27;" );
+  return name.replace(/&/g, "&amp;")
+     .replace(/</g, "&lt;")
+     .replace(/>/g, "&gt;")
+     .replace(/"/g, "&quot;")
      .replace(/'/g, '&#39;');
 }
 
