@@ -28,14 +28,20 @@ $(document).ready(function () {
               data: fd,
               dataType: 'text',
               success: function(data) {
-                var filename = data;
-                store.set(id, {'name' : name,
-                  'icon_path' : filename,
-                  'rank' : user_data.rank});
-                window.location.href = "user_main.html";
+                var d = JSON.parse(data);
+                if (d["result"] === "success") {
+                  store.set(id, {'name' : name,
+                    'icon_path' : d["file_name"],
+                    'rank' : user_data.rank});
+                  window.location.href = "user_main.html";
+                } else if (d["result"] === "error") {
+                  alert("Error occurred: " + d["message"]);
+                } else {
+                  alert("Undefined Server Error!");
+                }
               },
               error: function(data) {
-                window.location.href = "user_main.html";
+                alert("Undefined Server Error!");
               }
             });
           }          
