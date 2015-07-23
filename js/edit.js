@@ -19,18 +19,19 @@ $(document).ready(function () {
           var name = $("#name").val();
           var id = data[0].id;
           var store = milkcocoa.dataStore("user").child(user.user_id);
-          store.set(id, {'name' : name,
-                         'icon_path' : user_data.icon_path,
-                         'rank' : user_data.rank});
 
           if(Object.keys(fd).length != 0){
-            fd["fname"] = "images/user_icons/" + user.user_id;
+            fd["fname"] = user.user_id;
             $.ajax({
               url: 'uploader.php',
               type: 'POST',
               data: fd,
               dataType: 'text',
               success: function(data) {
+                var filename = data;
+                store.set(id, {'name' : name,
+                  'icon_path' : filename,
+                  'rank' : user_data.rank});
                 window.location.href = "user_main.html";
               },
               error: function(data) {

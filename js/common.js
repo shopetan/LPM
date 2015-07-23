@@ -62,12 +62,15 @@ function setUserInfo(user, milkcocoa) {
         data: {
           url: user.picture,
           file_name: user.user_id
-        }
+        },
+        success: function(data) {
+          var file_name = data;
+          user_data.push({'name' : user.name,
+                          'icon_path' : 'images/user_icons/' + file_name,
+                          'rank' : '1'});
+        })
       });
 
-      user_data.push({'name' : user.name,
-                      'icon_path' : 'images/user_icons/' + user.user_id,
-                      'rank' : '1'});
     }
   });
 }
