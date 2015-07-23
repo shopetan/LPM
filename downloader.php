@@ -12,8 +12,18 @@
 
 	$file_name = sanitize_filename($_POST['file_name']);
 	$data = file_get_contents($url);
-  $img = (@imagecreatefromstring($data));
+	$img = (@imagecreatefromstring($data));
+	if (!$img) {
+		echo '{"result":"error", "message":"invalid image"}';
+		exit;
+	}
+
 	$file_name .= "-" . sha1($data);
-	imagepng($img, "images/user_icons/" . $file_name);
+
+	if(!imagepng($img, "images/user_icons/" . $file_name)) {
+		echo '{"result":"error", "message":"file save error"}';
+		exit;
+	}
+
 ?>
 {"result":"success", "file_name":"<?=$file_name?>"}
