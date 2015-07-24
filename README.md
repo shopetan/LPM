@@ -53,7 +53,7 @@ or if you have write privileges:
 * [momenneko](https://github.com/momenneko)
 * [himkt](https://github.com/himkt)
 * [Ryo Kato](https://github.com/clariroid)
-
+* [Shiho Midorikawa](https://github.com/elliptic-shiho)
 
 # License
 
