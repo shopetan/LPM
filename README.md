@@ -29,7 +29,7 @@ http://honokak.osaka
 # Development
 
 ##Release
-Now release [ver1.1](https://github.com/shopetan/LPM/releases/tag/v1.1)
+Now release [ver1.2](https://github.com/shopetan/LPM/releases/tag/v1.2)
 
 ## Code
 
