@@ -168,6 +168,8 @@ function clickSearch(){
     $("#result_map").hide();
     // 地図から検索するときは検索結果の地図バージョンを作成
     if(addressRadioArea2 === true) {
+      // show にしてから初期化
+      $("#result_map").show();
       resultMap = new google.maps.Map(document.getElementById("result_map"), {
         zoom: 12,
         center: new google.maps.LatLng(pickUpLatitude, pickUpLongitude),
@@ -226,7 +228,6 @@ function search(cat, cateName, addr, lat, lng, namae, addrNum){
     // 地図検索のとき
     if(addrNum === 2 && lpcount != 0) {
       $("#resultmap_btn").show();
-      $("#result_map").show();
       $("#result_list").hide();
     } else {
       $("#resultmap_btn").hide();
