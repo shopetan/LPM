@@ -1,13 +1,29 @@
 <?php
+	require_once 'lib/validation.php';
+	if (!isset($_POST['url']) || !isset($_POST['file_name'])) {
+		echo '{"result":"error", "message":"invalid params"}';
+		exit;
+	}
 	$url = $_POST['url'];
-	$file_name = $_POST['file_name'];
-	while (is_file($file_name = sha1(mt_rand() . microtime())));
+	if (!is_valid_url($url)) {
+		echo '{"result":"error", "message":"invalid url"}';
+		exit;
+	}
 
-	if (strpos($url, '.') === false && is_file($url)) {
+	$file_name = sanitize_filename($_POST['file_name']);
 	$data = file_get_contents($url);
-	file_put_contents("./images/user_icons/{$file_name}",$data);
-	} else {
-	echo 'This file is not available';
+	$img = (@imagecreatefromstring($data));
+	if (!$img) {
+		echo '{"result":"error", "message":"invalid image"}';
+		exit;
+	}
+
+	$file_name .= "-" . sha1($data);
+
+	if(!imagepng($img, "images/user_icons/" . $file_name)) {
+		echo '{"result":"error", "message":"file save error"}';
+		exit;
 	}
 
 ?>
+{"result":"success", "file_name":"<?=$file_name?>"}

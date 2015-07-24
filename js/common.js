@@ -62,12 +62,24 @@ function setUserInfo(user, milkcocoa) {
         data: {
           url: user.picture,
           file_name: user.user_id
-        }
+        },
+        success: (function(data) {
+          var d = JSON.parse(data);
+          if (d["result"] === "success") {
+            user_data.push({'name' : user.name,
+                            'icon_path' : 'images/user_icons/' + d["file_name"],
+                            'rank' : '1'});
+          } else if (d["result"] === "error") {
+            alert("Error occurred: " + d["message"]);
+          } else {
+            alert("Undefined Server Error!");
+          }
+        }),
+        error: (function(data) {
+          alert("Undefined Server Error!");
+        })
       });
 
-      user_data.push({'name' : user.name,
-                      'icon_path' : 'images/user_icons/' + user.user_id,
-                      'rank' : '1'});
     }
   });
 }
