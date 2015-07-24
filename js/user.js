@@ -7,7 +7,7 @@ $(document).ready(function () {
         var user_data = data[0].value;
         $("#name").text(user_data.name);
         $("#rank").append(user_data.rank);
-        $("#icon").attr("src", "images/user_icons/" + user_data.icon_path);
+        $("#icon").attr("src", user_data.icon_path);
       });
     }
     else {
